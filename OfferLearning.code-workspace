@@ -4,5 +4,9 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"github.copilot.enable": {
+			"cpp": false
+		}
+	}
 }
