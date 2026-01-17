@@ -42,6 +42,20 @@ for i, x in enumerate(nums):
     nums[i] = x * 2
 ```
 
+- 逆向带索引遍历（保留原始索引）：
+
+```python
+for i, x in reversed(list(enumerate(seq))):
+    ...
+```
+
+- 逆向遍历但索引从 0 重新计（只需倒序、不关心原索引）：
+
+```python
+for i, x in enumerate(reversed(seq)):
+    ...
+```
+
 ---
 
 ## 3) 按索引遍历：range / len
