@@ -27,7 +27,6 @@ for ch in "hello":
 - 同时拿到索引和值，推荐替代 `range(len(seq))`
 - 可设置起始索引：`enumerate(seq, start=1)`
 
- 
 ```python
 for i, x in enumerate(seq):
     ...
@@ -69,7 +68,6 @@ for i in range(start, stop, step):
 - 默认按最短序列对齐。
 - Python 3.10+ 可用 `zip(a, b, strict=True)` 强制等长。
 
- 
 ```python
 for a, b in zip(list1, list2):
     ...
@@ -326,6 +324,30 @@ val = next(it, default=None)   # 取不到返回默认值
 with open("bin.dat", "rb") as f:
     for chunk in iter(lambda: f.read(8192), b""):
         ...
+```
+
+### 补充：`iter` 与迭代器的细节
+
+- `iter(obj)` 会调用 `obj.__iter__()` 返回迭代器；如果对象实现了 `__getitem__`，也可能被当作可迭代序列。
+- 迭代器是**一次性可消费**的：遍历完就“耗尽”，要重新 `iter()` 才能再遍历。
+- `next(it, default)` 可避免 `StopIteration`，在“读到末尾”场景更安全。
+
+```python
+it = iter([1, 2, 3])
+print(next(it))          # 1
+print(next(it, None))    # 2
+print(next(it, None))    # 3
+print(next(it, None))    # None（已耗尽）
+```
+
+- `iter(callable, sentinel)` 会反复调用 `callable()`，直到返回值等于 `sentinel`：
+
+```python
+def read_line():
+    return input("> ")
+
+for line in iter(read_line, "q"):
+    print("got:", line)
 ```
 
 - itertools 常用：
